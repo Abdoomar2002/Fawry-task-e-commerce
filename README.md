@@ -62,7 +62,6 @@ src/
 │   ├── java/com/example/springwebapi/
 │   │   ├── SpringWebApiApplication.java
 │   │   ├── controller/
-│   │   │   ├── UserController.java
 │   │   │   ├── ProductController.java
 │   │   │   ├── CustomerController.java
 │   │   │   ├── EcommerceController.java
@@ -71,20 +70,17 @@ src/
 │   │   │   ├── CartItemRequest.java
 │   │   │   └── CartItemResponse.java
 │   │   ├── entity/
-│   │   │   ├── User.java
 │   │   │   ├── Product.java
 │   │   │   ├── Customer.java
 │   │   │   ├── CartItem.java
 │   │   │   ├── Order.java
 │   │   │   └── OrderItem.java
 │   │   ├── repository/
-│   │   │   ├── UserRepository.java
 │   │   │   ├── ProductRepository.java
 │   │   │   ├── CustomerRepository.java
 │   │   │   ├── CartItemRepository.java
 │   │   │   └── OrderRepository.java
 │   │   ├── service/
-│   │   │   ├── UserService.java
 │   │   │   ├── EcommerceService.java
 │   │   │   ├── EcommerceDemoService.java
 │   │   │   ├── ShippingService.java
@@ -123,15 +119,6 @@ mvn spring-boot:run
 The application will start on `http://localhost:8080`
 
 ## API Endpoints
-
-### User Management
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/users` | Get all users |
-| GET | `/api/users/{id}` | Get user by ID |
-| POST | `/api/users` | Create a new user |
-| PUT | `/api/users/{id}` | Update user by ID |
-| DELETE | `/api/users/{id}` | Delete user by ID |
 
 ### Product Management
 | Method | Endpoint | Description |
