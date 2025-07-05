@@ -259,8 +259,6 @@ public class EcommerceService {
         System.out.printf("Subtotal %.0f%n", subtotal);
         System.out.printf("Shipping %.0f%n", shippingFees);
         System.out.printf("Amount %.0f%n", totalAmount);
-        System.out.printf("Customer balance after payment: %.0f%n", remainingBalance);
-        System.out.println("END.");
     }
 
     public List<CartItem> getCart(Long customerId) {

@@ -129,17 +129,12 @@ public class DemoService {
                     .findFirst()
                     .orElse(null);
             
-            Product tv = products.stream()
-                    .filter(p -> p.getName().equals("TV"))
+            Product biscuits = products.stream()
+                    .filter(p -> p.getName().equals("Biscuits"))
                     .findFirst()
                     .orElse(null);
             
-            Product scratchCard = products.stream()
-                    .filter(p -> p.getName().equals("Scratch Card"))
-                    .findFirst()
-                    .orElse(null);
-            
-            if (cheese == null || tv == null || scratchCard == null) {
+            if (cheese == null || biscuits == null) {
                 System.out.println("Required products not found. Available products:");
                 products.forEach(p -> System.out.println("- " + p.getName()));
                 return;
@@ -153,16 +148,13 @@ public class DemoService {
                 // For now, we'll just proceed with the test
             }
             
-            // Add items to cart as specified
+            // Add items to cart as specified in the expected output
             System.out.println("Adding items to cart:");
             ecommerceService.addToCart(customer.getId(), cheese.getId(), 2);
             System.out.println("cart.add(cheese, 2);");
             
-            ecommerceService.addToCart(customer.getId(), tv.getId(), 3);
-            System.out.println("cart.add(tv, 3);");
-            
-            ecommerceService.addToCart(customer.getId(), scratchCard.getId(), 1);
-            System.out.println("cart.add(scratchCard, 1);");
+            ecommerceService.addToCart(customer.getId(), biscuits.getId(), 1);
+            System.out.println("cart.add(biscuits, 1);");
             
             // Show cart before checkout
             System.out.println("\nCart contents before checkout:");
