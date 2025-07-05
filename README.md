@@ -53,6 +53,8 @@ A complete Spring Boot E-commerce Web API project that implements the Fawry Quan
 - **Comprehensive Cart Management** with full CRUD operations
 - **DTO-based API** with validation
 - **Transaction Safety** for all operations
+- **Web-based GUI** for complete API management
+- **Responsive Design** for desktop, tablet, and mobile
 
 ## Project Structure
 
@@ -91,7 +93,11 @@ src/
 │   │   └── config/
 │   │       └── DataInitializer.java
 │   └── resources/
-│       └── application.properties
+│       ├── application.properties
+│       └── static/
+│           ├── index.html
+│           ├── styles.css
+│           └── script.js
 └── test/
     └── java/com/example/springwebapi/
         └── SpringWebApiApplicationTests.java
@@ -152,6 +158,7 @@ The application will start on `http://localhost:8080`
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/demo/run` | Run the e-commerce demo |
+| GET | `/api/demo/test` | Run specific test scenario |
 
 ## Sample Requests
 
@@ -220,6 +227,11 @@ curl -X POST http://localhost:8080/api/ecommerce/checkout/1
 ### Run Demo
 ```bash
 curl -X POST http://localhost:8080/api/demo/run
+```
+
+### Run Specific Test
+```bash
+curl -X GET http://localhost:8080/api/demo/test
 ```
 
 ## Demo Output
@@ -344,6 +356,29 @@ mvn test
 - Prints shipment details to console
 - Calculates total package weight in kg
 
+## Web GUI
+
+The application includes a comprehensive web-based GUI for managing all APIs:
+
+### Access the GUI
+1. Start the application: `mvn spring-boot:run`
+2. Open your browser and navigate to: `http://localhost:8080`
+
+### GUI Features
+- **Dashboard**: Real-time statistics and quick access to all features
+- **Product Management**: Create, edit, delete products with type-specific forms
+- **Customer Management**: Manage customer accounts and balances
+- **Cart Management**: Add, update, remove items, and process checkouts
+- **Order Management**: View order history and details
+- **Demo Operations**: Run full demo or specific test scenarios
+
+### GUI Benefits
+- **No API Knowledge Required**: User-friendly interface for non-technical users
+- **Real-time Updates**: Automatic data refresh after operations
+- **Responsive Design**: Works on desktop, tablet, and mobile devices
+- **Visual Feedback**: Success/error notifications and loading states
+- **Complete Integration**: Full access to all API functionality
+
 ## API Documentation
 
 For detailed API documentation, see:
@@ -361,7 +396,16 @@ For production deployment:
 
 ## Recent Updates
 
-### Cart Management Enhancements (Latest)
+### Web GUI Implementation (Latest)
+- ✅ Added comprehensive web-based GUI for API management
+- ✅ Implemented responsive design for all devices
+- ✅ Added real-time dashboard with statistics
+- ✅ Created product management with type-specific forms
+- ✅ Added customer management interface
+- ✅ Implemented complete cart management GUI
+- ✅ Added order viewing and demo operation interfaces
+
+### Cart Management Enhancements
 - ✅ Added comprehensive cart item management
 - ✅ Implemented update cart item functionality
 - ✅ Added remove specific items from cart

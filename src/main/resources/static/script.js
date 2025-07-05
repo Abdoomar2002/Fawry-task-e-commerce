@@ -3,7 +3,8 @@ let currentCustomerId = null;
 let currentProductId = null;
 
 // API Base URL
-const API_BASE = '/api';
+const API_BASE = 'http://localhost:8080/api';
+
 
 // Utility functions
 function showNotification(message, type = 'info') {
