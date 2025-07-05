@@ -121,7 +121,7 @@ public class EcommerceService {
     }
 
     @Transactional
-    public void checkout(Long customerId) {
+    public String checkout(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
 
@@ -202,13 +202,14 @@ public class EcommerceService {
         cartItemRepository.deleteByCustomer(customer);
 
         // Print checkout details
-        printCheckoutDetails(cartItems, subtotal, shippingFees, totalAmount, customer.getBalance());
+     String result=   printCheckoutDetails(cartItems, subtotal, shippingFees, totalAmount, customer.getBalance());
 
         // Handle shipping
         List<ShippableItem> shippableItems = getShippableItems(cartItems);
         if (!shippableItems.isEmpty()) {
-            shippingService.shipItems(shippableItems);
+         result+=   shippingService.shipItems(shippableItems);
         }
+        return result;
     }
 
     private double calculateShippingFees(List<CartItem> cartItems) {
@@ -245,20 +246,25 @@ public class EcommerceService {
         return shippableItems;
     }
 
-    private void printCheckoutDetails(List<CartItem> cartItems, double subtotal, double shippingFees, double totalAmount, double remainingBalance) {
-        System.out.println("** Checkout receipt **");
-        
+    private String printCheckoutDetails(List<CartItem> cartItems, double subtotal, double shippingFees, double totalAmount, double remainingBalance) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("** Checkout receipt **\n");
+
         for (CartItem cartItem : cartItems) {
-            System.out.printf("%dx %s %.0f%n", 
-                cartItem.getQuantity(), 
-                cartItem.getProduct().getName(), 
-                cartItem.getSubtotal());
+            sb.append(String.format("%dx %s %.0f%n",
+                    cartItem.getQuantity(),
+                    cartItem.getProduct().getName(),
+                    cartItem.getSubtotal()));
         }
-        
-        System.out.println("----------------------");
-        System.out.printf("Subtotal %.0f%n", subtotal);
-        System.out.printf("Shipping %.0f%n", shippingFees);
-        System.out.printf("Amount %.0f%n", totalAmount);
+
+        sb.append("----------------------\n");
+        sb.append(String.format("Subtotal %.0f%n", subtotal));
+        sb.append(String.format("Shipping %.0f%n", shippingFees));
+        sb.append(String.format("Amount %.0f%n", totalAmount));
+        sb.append(String.format("Customer balance after payment: %.0f%n", remainingBalance));
+        System.out.print(sb.toString());
+        return sb.toString();
     }
 
     public List<CartItem> getCart(Long customerId) {

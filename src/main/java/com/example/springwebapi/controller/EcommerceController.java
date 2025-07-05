@@ -47,8 +47,8 @@ public class EcommerceController {
     @PostMapping("/checkout/{customerId}")
     public ResponseEntity<String> checkout(@PathVariable Long customerId) {
         try {
-            ecommerceService.checkout(customerId);
-            return ResponseEntity.ok("Checkout completed successfully");
+         String response= ecommerceService.checkout(customerId);
+            return ResponseEntity.ok(String.format("Checkout completed successfully%n%n %s", response));
         } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

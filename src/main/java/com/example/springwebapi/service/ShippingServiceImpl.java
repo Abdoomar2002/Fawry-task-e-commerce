@@ -10,33 +10,36 @@ import java.util.Map;
 public class ShippingServiceImpl implements ShippingService {
 
     @Override
-    public void shipItems(List<ShippableItem> items) {
+    public String shipItems(List<ShippableItem> items) {
         if (items == null || items.isEmpty()) {
-            return;
+            return "";
         }
 
-        System.out.println("** Shipment notice **");
-        
-        // Group items by name and sum their weights
+        StringBuilder sb = new StringBuilder();
+        sb.append("** Shipment notice **\n");
+
+        // Group items by name and track count and weight
         Map<String, Integer> itemCounts = new HashMap<>();
         Map<String, Double> itemWeights = new HashMap<>();
         double totalWeight = 0.0;
-        
+
         for (ShippableItem item : items) {
             String name = item.getName();
             itemCounts.put(name, itemCounts.getOrDefault(name, 0) + 1);
             itemWeights.put(name, item.getWeight());
             totalWeight += item.getWeight();
         }
-        
-        // Print grouped items
+
         for (Map.Entry<String, Integer> entry : itemCounts.entrySet()) {
             String name = entry.getKey();
             int count = entry.getValue();
-            double weight = itemWeights.get(name);
-            System.out.printf("%dx %s %.0fg%n", count, name, weight);
+            double weight = itemWeights.get(name); // per item weight
+            sb.append(String.format("%dx %s %.0fg%n", count, name, weight));
         }
-        
-        System.out.printf("Total package weight %.1fkg%n", totalWeight / 1000.0);
+
+        sb.append(String.format("Total package weight %.1fkg%n", totalWeight / 1000.0));
+
+        System.out.printf(sb.toString());
+        return sb.toString();
     }
 } 
