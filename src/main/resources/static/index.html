@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fawry E-commerce Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-shopping-cart"></i> Fawry E-commerce Management</h1>
+            <p>Complete API Management Interface</p>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('dashboard')">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+            </button>
+            <button class="tab-btn" onclick="showTab('products')">
+                <i class="fas fa-box"></i> Products
+            </button>
+            <button class="tab-btn" onclick="showTab('customers')">
+                <i class="fas fa-users"></i> Customers
+            </button>
+            <button class="tab-btn" onclick="showTab('cart')">
+                <i class="fas fa-shopping-cart"></i> Cart Management
+            </button>
+            <button class="tab-btn" onclick="showTab('orders')">
+                <i class="fas fa-receipt"></i> Orders
+            </button>
+            <button class="tab-btn" onclick="showTab('demo')">
+                <i class="fas fa-play"></i> Demo
+            </button>
+        </nav>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3><i class="fas fa-box"></i> Products</h3>
+                    <div class="stat">
+                        <span id="productCount">Loading...</span>
+                        <small>Total Products</small>
+                    </div>
+                    <button onclick="showTab('products')" class="btn-primary">Manage Products</button>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-users"></i> Customers</h3>
+                    <div class="stat">
+                        <span id="customerCount">Loading...</span>
+                        <small>Total Customers</small>
+                    </div>
+                    <button onclick="showTab('customers')" class="btn-primary">Manage Customers</button>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-shopping-cart"></i> Cart Items</h3>
+                    <div class="stat">
+                        <span id="cartCount">Loading...</span>
+                        <small>Active Carts</small>
+                    </div>
+                    <button onclick="showTab('cart')" class="btn-primary">View Carts</button>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-receipt"></i> Orders</h3>
+                    <div class="stat">
+                        <span id="orderCount">Loading...</span>
+                        <small>Total Orders</small>
+                    </div>
+                    <button onclick="showTab('orders')" class="btn-primary">View Orders</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Products Tab -->
+        <div id="products" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-box"></i> Product Management</h2>
+                <button onclick="showProductForm()" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add Product
+                </button>
+            </div>
+            
+            <div id="productForm" class="form-container" style="display: none;">
+                <h3>Add/Edit Product</h3>
+                <form id="productFormElement">
+                    <div class="form-group">
+                        <label for="productName">Name:</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productPrice">Price:</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productQuantity">Quantity:</label>
+                        <input type="number" id="productQuantity" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="productType">Type:</label>
+                        <select id="productType" onchange="toggleProductFields()">
+                            <option value="simple">Simple Product</option>
+                            <option value="shippable">Shippable Product</option>
+                            <option value="expirable">Expirable Product</option>
+                            <option value="shippableExpirable">Shippable & Expirable</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="weightGroup" style="display: none;">
+                        <label for="productWeight">Weight (grams):</label>
+                        <input type="number" id="productWeight" step="0.1">
+                    </div>
+                    <div class="form-group" id="expiryGroup" style="display: none;">
+                        <label for="productExpiry">Expiry Date:</label>
+                        <input type="date" id="productExpiry">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Save Product</button>
+                        <button type="button" onclick="hideProductForm()" class="btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table id="productsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        <tr><td colspan="6">Loading products...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Customers Tab -->
+        <div id="customers" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Customer Management</h2>
+                <button onclick="showCustomerForm()" class="btn-primary">
+                    <i class="fas fa-plus"></i> Add Customer
+                </button>
+            </div>
+            
+            <div id="customerForm" class="form-container" style="display: none;">
+                <h3>Add/Edit Customer</h3>
+                <form id="customerFormElement">
+                    <div class="form-group">
+                        <label for="customerName">Name:</label>
+                        <input type="text" id="customerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerEmail">Email:</label>
+                        <input type="email" id="customerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerBalance">Balance:</label>
+                        <input type="number" id="customerBalance" step="0.01" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Save Customer</button>
+                        <button type="button" onclick="hideCustomerForm()" class="btn-secondary">Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <table id="customersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Balance</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customersTableBody">
+                        <tr><td colspan="5">Loading customers...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Cart Management Tab -->
+        <div id="cart" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-shopping-cart"></i> Cart Management</h2>
+            </div>
+            
+            <div class="cart-controls">
+                <div class="form-group">
+                    <label for="cartCustomerId">Customer ID:</label>
+                    <input type="number" id="cartCustomerId" placeholder="Enter customer ID">
+                </div>
+                <button onclick="loadCustomerCart()" class="btn-primary">Load Cart</button>
+            </div>
+
+            <div id="cartForm" class="form-container">
+                <h3>Add Item to Cart</h3>
+                <form id="cartFormElement">
+                    <div class="form-group">
+                        <label for="cartProductId">Product ID:</label>
+                        <input type="number" id="cartProductId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cartQuantity">Quantity:</label>
+                        <input type="number" id="cartQuantity" min="1" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Add to Cart</button>
+                        <button type="button" onclick="updateCartItem()" class="btn-secondary">Update Item</button>
+                        <button type="button" onclick="removeFromCart()" class="btn-danger">Remove Item</button>
+                        <button type="button" onclick="clearCart()" class="btn-danger">Clear Cart</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <h3>Cart Items</h3>
+                <table id="cartTable">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartTableBody">
+                        <tr><td colspan="5">Select a customer to view cart</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="checkout-section">
+                <button onclick="checkout()" class="btn-success">
+                    <i class="fas fa-credit-card"></i> Checkout
+                </button>
+            </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div id="orders" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-receipt"></i> Order Management</h2>
+            </div>
+            
+            <div class="table-container">
+                <table id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Subtotal</th>
+                            <th>Shipping</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <tr><td colspan="7">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Demo Tab -->
+        <div id="demo" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-play"></i> Demo Operations</h2>
+            </div>
+            
+            <div class="demo-controls">
+                <button onclick="runDemo()" class="btn-primary">
+                    <i class="fas fa-play"></i> Run Full Demo
+                </button>
+                <button onclick="runSpecificTest()" class="btn-secondary">
+                    <i class="fas fa-flask"></i> Run Specific Test
+                </button>
+            </div>
+            
+            <div class="demo-output">
+                <h3>Demo Output</h3>
+                <div id="demoOutput" class="output-container">
+                    <p>Click a demo button to see the output...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification" class="notification"></div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
