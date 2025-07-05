@@ -1,15 +1,15 @@
 package com.example.springwebapi.repository;
 
-import com.example.springwebapi.entity.User;
+import com.example.springwebapi.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
     
-    Optional<User> findByEmail(String email);
+    Optional<Customer> findByEmail(String email);
     
     boolean existsByEmail(String email);
 } 
